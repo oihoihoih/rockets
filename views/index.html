@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/flatly/bootstrap.min.css" integrity="sha384-mhpbKVUOPCSocLzx2ElRISIORFRwr1ZbO9bAlowgM5kO7hnpRBe+brVj8NNPUiFs" crossorigin="anonymous">
+    <title>Rockets</title>
+</head>
+<body class="bg-light 100vh mw-100">
+
+    <header class="container-fluid m-5">
+        <h1 class="text-primary">Rockets</h1>
+    </header>
+
+    <div class="container-fluid m-5 h-100 w-100">
+        <div class="row">
+            <div class="col-4">
+            <div class="card bg-primary">
+                <div class="card-header pt-5">
+                    <h3 class="text-success">Add your Rocket!</h3>
+                </div>
+
+                <div class="card-body">
+                    <form id="rocketForm"class="form">
+                        <div class="form-group mt-5">
+                            <label for="formCode" class="text-light">Rocket code:</label>
+                            <input type="text" id="formCode" class="form-control">
+                            <div class="invalid-feedback">Please the code must be a string of 8 characters</div>
+                        </div>
+
+                        <div class="form-group mt-5">
+                            <label for="formThruster" class="text-light">Number of thrusters:</label>
+                            <input type="number" id="formThruster" class="form-control">
+                            <div class="invalid-feedback">Please, this field is required</div>
+                        </div>
+
+                        <div class="form-group mt-5">
+                            <input type="submit" id="sendForm" class="btn btn-block p-2 btn-success text-primary" value="Create Rocket" onClick="createRocket(formCode.value, formThruster.value)">
+                        </div>                        
+                    </form>
+                </div>
+            </div>
+            </div>
+
+            <div id="infoArea" class="col-7 d-none">
+            <div class="col-7 mx-5 mb-3">
+                <button type="button" id="accelerateButton" class="btn btn-success mr-3" onClick="accelerate('accelerate')">accelerate</button>
+
+                <button type="button" id="decelerateButton" class="btn btn-danger" onClick="accelerate('decelerate')">decelerate</button>
+            </div>
+
+            <div class="card border-primary mx-5 d-flex">
+                <div class="card-body h-aut">
+                    <div class="row w-100 text-success">
+                        <h6 class="col-md-2">rocket code</h6>
+                        <h6 class="col-md-2">thrusters</h6>
+                        <h6 class="col-md-3">max. power</h6>
+                        <h6 class="col-md-3">actual power</h6>
+                        <h6 class="col-2">total power</h6>
+                    </div>
+                    <div class="row w-100">
+                        <div id="codeName" class="col-2"></div>
+                        <div id="thrusterNumber" class="col-md-2"></div>
+                        <div id="thrusterPower" class="col-3"></div>
+                        <div id="thrusterActualPower" class="col-md-3"></div>
+                        <div id="totalPower" class="col-2"></div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+        
+
+    </div>
+
+<script src="../models/rocket.js"></script>
+<script src="../controllers/controller.js"></script>
+<script src="../models/thruster.js"></script>
+</body>
+</html>
