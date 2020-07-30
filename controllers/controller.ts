@@ -49,12 +49,16 @@ function printRocketList(code:any, thrusterN:any){
     let maxPowerArray:any = [];
     let actualPowerArray:any = [];
     let powerSum:any = [];
+    let accelerateButton:any = [];
+    let decelerateButton:any = [];
 
     let codeNameUI:any = document.getElementById('codeName');
     let thrusterNumberUI:any = document.getElementById('thrusterNumber');
     let thrusterPowerUI:any = document.getElementById('thrusterPower');
     let thrusterActualPowerUI:any = document.getElementById('thrusterActualPower');
     let totalPowerUI:any = document.getElementById('totalPower');
+    let accelerateButtonUI:any = document.getElementById('accelerateButton');
+    let decelerateButtonUI:any = document.getElementById('decelerateButton');
 
     textSpace.classList.remove('d-none');
 
@@ -72,6 +76,11 @@ function printRocketList(code:any, thrusterN:any){
         maxPowerArray.push(tempMaxPowerArray);
         actualPowerArray.push(tempActualPowerArray);
         powerSum.push(tempPowerSum);
+        let accelerate = `<button class="btn btn-success btn-sm btn-block
+        " id="btn${i}" onClick="toAccelerate('accelerate', ${i})">Accelerate</button>`;
+        accelerateButton.push(accelerate);
+        let decelerate = `<button class="btn btn-danger btn-sm btn-block" id="btnDc${i}" onClick="toAccelerate('decelerate', ${i})">Decelerate</button>`;
+        decelerateButton.push(decelerate);
     }
 
     //Imprimir
@@ -80,8 +89,9 @@ function printRocketList(code:any, thrusterN:any){
     thrusterPowerUI.innerHTML = maxPowerArray.join('<br>');
     thrusterActualPowerUI.innerHTML = actualPowerArray.join('<br>');
     totalPowerUI.innerHTML = powerSum.join('<br>');
+    accelerateButtonUI.innerHTML = accelerateButton.join('');
+    decelerateButtonUI.innerHTML = decelerateButton.join('');
 }
-
 
 
 // VALIDATE OBJECTS
@@ -123,48 +133,37 @@ function validateThrustersPower(power:number){
 
 
 // METHODS
-function accelerate(action:any){
-    let index;
-    let indice = searchIndex(index);
-    let thrusters=rocketsArray[indice].thrusters;
+
+function toAccelerate(action:any, index:number){
+
+    let thrusters=rocketsArray[index].thrusters;
     let maxPower= 0;
-
+    
     if (action == 'accelerate'){
-        for(let i=0; i<thrusters.length;  i++){
-            if(thrusters[i].actualPower < thrusters[i].power){
-            thrusters[i].actualPower += 10;
-            } else {
-                maxPower += 1;
+            for(let i=0; i<thrusters.length;  i++){
+                if(thrusters[i].actualPower < thrusters[i].power){
+                thrusters[i].actualPower += 10;
+                } else {
+                    maxPower += 1;
+                }
             }
-        }
-        if (maxPower == thrusters.length){
-            alert('Thrusters have reached maximum power');
-        }
+            if (maxPower == thrusters.length){
+                alert('Thrusters have reached maximum power');
+            }
     }
-
+    
     if (action == 'decelerate'){
-        for(let i=0; i<thrusters.length;  i++){
-            if(thrusters[i].actualPower > 0){
-            thrusters[i].actualPower -= 10;
-            } else {
-                maxPower += 1;
+            for(let i=0; i<thrusters.length;  i++){
+                if(thrusters[i].actualPower > 0){
+                thrusters[i].actualPower -= 10;
+                } else {
+                    maxPower += 1;
+                }
             }
-        }
-        if (maxPower == thrusters.length){
-            alert ('Thrusters have reached minimum power');
-        }
+            if (maxPower == thrusters.length){
+                alert ('Thrusters have reached minimum power');
+            }
     }
     printRocketList();
-   
-}
-
-function searchIndex(index:any){
-    let whichRocket = prompt('Insert de code of the rocket you want accelerate');
-
-    let indice:any;
-    for (let i=0;  i <rocketsArray.length; i++){
-        if (whichRocket == rocketsArray[i].code) indice = i;
-        else alert('There is no rocket with this code, please try again');
-    } 
-    return indice;
+       
 }

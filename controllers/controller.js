@@ -38,11 +38,15 @@ function printRocketList(code, thrusterN) {
     var maxPowerArray = [];
     var actualPowerArray = [];
     var powerSum = [];
+    var accelerateButton = [];
+    var decelerateButton = [];
     var codeNameUI = document.getElementById('codeName');
     var thrusterNumberUI = document.getElementById('thrusterNumber');
     var thrusterPowerUI = document.getElementById('thrusterPower');
     var thrusterActualPowerUI = document.getElementById('thrusterActualPower');
     var totalPowerUI = document.getElementById('totalPower');
+    var accelerateButtonUI = document.getElementById('accelerateButton');
+    var decelerateButtonUI = document.getElementById('decelerateButton');
     textSpace.classList.remove('d-none');
     for (var i = 0; i < rocketsArray.length; i++) {
         codeArray.push(rocketsArray[i].code);
@@ -58,6 +62,10 @@ function printRocketList(code, thrusterN) {
         maxPowerArray.push(tempMaxPowerArray);
         actualPowerArray.push(tempActualPowerArray);
         powerSum.push(tempPowerSum);
+        var accelerate = "<button class=\"btn btn-success btn-sm btn-block\n        \" id=\"btn" + i + "\" onClick=\"toAccelerate('accelerate', " + i + ")\">Accelerate</button>";
+        accelerateButton.push(accelerate);
+        var decelerate = "<button class=\"btn btn-danger btn-sm btn-block\" id=\"btnDc" + i + "\" onClick=\"toAccelerate('decelerate', " + i + ")\">Decelerate</button>";
+        decelerateButton.push(decelerate);
     }
     //Imprimir
     codeNameUI.innerHTML = codeArray.join('<br>');
@@ -65,6 +73,8 @@ function printRocketList(code, thrusterN) {
     thrusterPowerUI.innerHTML = maxPowerArray.join('<br>');
     thrusterActualPowerUI.innerHTML = actualPowerArray.join('<br>');
     totalPowerUI.innerHTML = powerSum.join('<br>');
+    accelerateButtonUI.innerHTML = accelerateButton.join('');
+    decelerateButtonUI.innerHTML = decelerateButton.join('');
 }
 // VALIDATE OBJECTS
 function validateForms(code, thrusterN) {
@@ -97,10 +107,8 @@ function validateThrustersPower(power) {
     }
 }
 // METHODS
-function accelerate(action) {
-    var index;
-    var indice = searchIndex(index);
-    var thrusters = rocketsArray[indice].thrusters;
+function toAccelerate(action, index) {
+    var thrusters = rocketsArray[index].thrusters;
     var maxPower = 0;
     if (action == 'accelerate') {
         for (var i = 0; i < thrusters.length; i++) {
@@ -129,15 +137,4 @@ function accelerate(action) {
         }
     }
     printRocketList();
-}
-function searchIndex(index) {
-    var whichRocket = prompt('Insert de code of the rocket you want accelerate');
-    var indice;
-    for (var i = 0; i < rocketsArray.length; i++) {
-        if (whichRocket == rocketsArray[i].code)
-            indice = i;
-        else
-            alert('There is no rocket with this code, please try again');
-    }
-    return indice;
 }
